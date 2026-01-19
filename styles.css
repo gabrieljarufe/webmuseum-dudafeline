@@ -16,36 +16,37 @@ html {
 body {
     margin: 0;
     height: 100%;
-    background:
-        radial-gradient(1200px 600px at 50% 40%, rgba(199, 166, 93, .08), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg-2));
+    background: none;
     font-family: "Bodoni Moda", serif;
     color: var(--gold);
     overflow: hidden;
     /* scroll só depois */
 }
 
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(1200px 600px at 50% 40%, rgba(199, 166, 93, .08), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+    z-index: -1;
+    pointer-events: none;
+}
+
 /* ---------- SCROLLBAR (após entrar na exposição) ---------- */
 body.enable-scroll {
-    overflow-y: auto;
+    overflow: auto;
+    height: auto;
 }
 
 body.enable-scroll::-webkit-scrollbar {
-    width: 6px;
-}
-
-body.enable-scroll::-webkit-scrollbar-track {
-    background: transparent;
+    background: var(--gold);
 }
 
 body.enable-scroll::-webkit-scrollbar-thumb {
     background: var(--gold);
     border-radius: 0;
-}
-
-body.enable-scroll {
-    scrollbar-width: thin;
-    scrollbar-color: var(--gold) transparent;
 }
 
 /* ---------- INTRO ---------- */
@@ -105,7 +106,7 @@ body.enable-scroll {
     cursor: pointer;
 
     opacity: 0;
-    transition: opacity 2 ease, background 2 ease;
+    transition: opacity 1.5s ease, background 1.5s ease;
 }
 
 .start-btn.show {
@@ -131,7 +132,7 @@ body.enable-scroll {
     pointer-events: none;
 
     transform: translateY(24px);
-    transition: opacity .9s ease, transform .9s ease;
+    transition: opacity .9s ease, transform .9s ease, visibility .9s ease;
 }
 
 .stage.show {

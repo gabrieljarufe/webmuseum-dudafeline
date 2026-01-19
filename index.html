@@ -60,64 +60,50 @@
         <div class="meta">Acrílica sobre papel · 2024</div>
       </div>
     </div>
+
+    <div class="scroll-indicator" id="arrow2" aria-label="Próxima obra">
+      <svg width="22" height="12" viewBox="0 0 22 12">
+        <path d="M1 1L11 11L21 1"
+          stroke="currentColor"
+          stroke-width="1.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+      </svg>
+    </div>
   </section>
 
+  <!-- SALA 3 (mockup) -->
   <section class="stage" id="stage3">
+    <div class="artwork">
+      <img src="coelho-frame.png" alt="Coelho – Estudo III">
+      <div class="caption" id="caption3">
+        <div class="title">COELHO · ESTUDO III</div>
+        <div class="meta">Acrílica sobre papel · 2024</div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" id="arrow3" aria-label="Próxima obra">
+      <svg width="22" height="12" viewBox="0 0 22 12">
+        <path d="M1 1L11 11L21 1"
+          stroke="currentColor"
+          stroke-width="1.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="stage" id="stage4">
     <div class="artwork">
       <img src="coelho-frame.png" alt="Coelho 3 – Estudo 3">
       <div class="caption" id="caption2">
-        <div class="title">COELHO · ESTUDO II</div>
+        <div class="title">COELHO · ESTUDO IIII</div>
         <div class="meta">Acrílica sobre papel · 2024</div>
       </div>
     </div>
   </section>
 
-  <script>
-    // garante topo absoluto
-    window.scrollTo(0,0);
-
-    const intro    = document.getElementById('intro');
-    const startBtn = document.getElementById('startBtn');
-
-    const stage1   = document.getElementById('stage1');
-    const stage2   = document.getElementById('stage2');
-
-    const caption1 = document.getElementById('caption1');
-    const caption2 = document.getElementById('caption2');
-
-    const arrow1   = document.getElementById('arrow1');
-
-    // intro
-    window.addEventListener('DOMContentLoaded', () => {
-      intro.classList.add('ready');
-      setTimeout(() => startBtn.classList.add('show'), 700);
-    });
-
-    // entrar na exposição
-    startBtn.addEventListener('click', () => {
-      intro.classList.add('hide');
-
-      setTimeout(() => {
-        intro.style.display = 'none';
-        document.body.classList.add('enable-scroll');
-
-        stage1.classList.add('show');
-        stage1.scrollIntoView({ behavior:'smooth', block:'start' });
-
-      }, 800);
-
-      setTimeout(() => caption1.classList.add('show'), 1400);
-      setTimeout(() => arrow1.classList.add('show'), 8000);
-    });
-
-    // arrow -> próxima sala
-    arrow1.addEventListener('click', () => {
-      stage2.scrollIntoView({ behavior:'smooth', block:'start' });
-
-      setTimeout(() => stage2.classList.add('show'), 200);
-      setTimeout(() => caption2.classList.add('show'), 900);
-    });
-  </script>
+  <script src="script.js"></script>
 
 </body>
 </html>
