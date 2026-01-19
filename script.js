@@ -44,7 +44,7 @@ startBtn.addEventListener('click', () => {
 arrow1.addEventListener('click', () => {
     stage2.classList.remove('hidden');
     stage2.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    document.body.classList.add('enable-scroll');
+    document.documentElement.classList.add('enable-scroll');
     setTimeout(() => stage2.classList.add('show'), 200);
     setTimeout(() => caption2.classList.add('show'), 900);
     setTimeout(() => arrow2.classList.add('show'), TIME_WAIT_ARROW);
@@ -56,4 +56,11 @@ arrow2.addEventListener('click', () => {
     setTimeout(() => stage3.classList.add('show'), 200);
     setTimeout(() => caption3.classList.add('show'), 900);
     setTimeout(() => arrow3.classList.add('show'), TIME_WAIT_ARROW);
+});
+
+arrow3.addEventListener('click', () => {
+    stage4.classList.remove('hidden');
+    stage4.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => stage4.classList.add('show'), 200);
+    setTimeout(() => caption4.classList.add('show'), 900);
 });

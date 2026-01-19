@@ -35,18 +35,34 @@ body::before {
 }
 
 /* ---------- SCROLLBAR (após entrar na exposição) ---------- */
-body.enable-scroll {
-    overflow: auto;
-    height: auto;
+html {
+    scroll-behavior: smooth;
 }
 
-body.enable-scroll::-webkit-scrollbar {
+html.enable-scroll {
+    overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+body::-webkit-scrollbar-thumb {
     background: var(--gold);
 }
 
-body.enable-scroll::-webkit-scrollbar-thumb {
-    background: var(--gold);
-    border-radius: 0;
+body::-webkit-scrollbar-thumb:hover {
+    background: rgba(199, 166, 93, 1);
+}
+
+/* Firefox support */
+html.enable-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) var(--bg);
 }
 
 /* ---------- INTRO ---------- */
