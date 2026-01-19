@@ -40,20 +40,21 @@ startBtn.addEventListener('click', () => {
 });
 
 // arrow -> próxima sala
+
 arrow1.addEventListener('click', () => {
+    stage2.classList.remove('hidden');
     stage2.scrollIntoView({ behavior: 'smooth', block: 'start' });
     document.body.classList.add('enable-scroll');
-    setTimeout(() => arrow2.classList.add('show'), TIME_WAIT_ARROW);
-    setTimeout(() => caption2.classList.add('show'), 900);
     setTimeout(() => stage2.classList.add('show'), 200);
+    setTimeout(() => caption2.classList.add('show'), 900);
+    setTimeout(() => arrow2.classList.add('show'), TIME_WAIT_ARROW);
 });
 
 arrow2.addEventListener('click', () => {
-    console.log('clicou');
-    stage3.display = 'flex';
+    stage3.classList.remove('hidden');
     stage3.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    setTimeout(() => arrow3.classList.add('show'), TIME_WAIT_ARROW);
-    setTimeout(() => caption3.classList.add('show'), 900);
     setTimeout(() => stage3.classList.add('show'), 200);
+    setTimeout(() => caption3.classList.add('show'), 900);
+    setTimeout(() => arrow3.classList.add('show'), TIME_WAIT_ARROW);
 });
 
