@@ -1,6 +1,4 @@
-window.scrollTo(0, 0);
-
-const TIME_WAIT_ARROW = 2000;
+const TIME_WAIT_ARROW = 5000;
 
 const intro = document.getElementById('intro');
 const startBtn = document.getElementById('startBtn');
@@ -80,10 +78,12 @@ startBtn.addEventListener('click', () => {
 const showNextPainting = (stage, caption, arrow) => {
     stage.classList.remove('hidden');
     stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
     setTimeout(() => {
         stage.classList.add('show');
         revealStageImages(stage);
     }, 450);
+
     setTimeout(() => caption.classList.add('show'), 1050);
     setTimeout(() => arrow.classList.add('show'), TIME_WAIT_ARROW);
 }
@@ -177,3 +177,4 @@ const revealStageImages = (stageEl) => {
     img.addEventListener('error', () => revealImgWithFade(img), { once: true });
   });
 };
+
