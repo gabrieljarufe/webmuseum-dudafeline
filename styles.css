@@ -326,3 +326,15 @@ html.enable-scroll::-webkit-scrollbar-thumb {
         transform: translate(-50%, 0);
     }
 }
+
+/* Fade-in controlado por JS (funciona mesmo com cache) */
+.stage .artwork img {
+  opacity: 0;
+  transition: opacity 650ms ease;
+  will-change: opacity;
+}
+
+/* Quando liberarmos via JS */
+.stage .artwork img.img-reveal {
+  opacity: 1;
+}

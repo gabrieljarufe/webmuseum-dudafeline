@@ -57,8 +57,10 @@ const hidePaintings = () => {
 hidePaintings();
 
 window.addEventListener('DOMContentLoaded', () => {
-    intro.classList.add('ready');
-    setTimeout(() => startBtn.classList.add('show'), 1000);
+  prepareImageLoadingTracking();
+
+  intro.classList.add('ready');
+  setTimeout(() => startBtn.classList.add('show'), 1000);
 });
 
 startBtn.addEventListener('click', () => {
@@ -68,6 +70,7 @@ startBtn.addEventListener('click', () => {
     setTimeout(() => {
         intro.style.display = 'none';
         stage1.classList.add('show');
+        revealStageImages(stage1);
     }, 800);
 
     setTimeout(() => caption1.classList.add('show'), 1400);
@@ -77,7 +80,10 @@ startBtn.addEventListener('click', () => {
 const showNextPainting = (stage, caption, arrow) => {
     stage.classList.remove('hidden');
     stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    setTimeout(() => stage.classList.add('show'), 450);
+    setTimeout(() => {
+        stage.classList.add('show');
+        revealStageImages(stage);
+    }, 450);
     setTimeout(() => caption.classList.add('show'), 1050);
     setTimeout(() => arrow.classList.add('show'), TIME_WAIT_ARROW);
 }
@@ -125,3 +131,49 @@ arrow9.addEventListener('click', () => {
 arrow10.addEventListener('click', () => {
     showNextPainting(stage11, caption11, arrow11);
 });
+
+const markImgAsLoaded = (img) => {
+  img.dataset.loaded = '1';
+};
+
+const isImgLoaded = (img) => img.complete && img.naturalWidth > 0;
+
+const revealImgWithFade = (img) => {
+  // rAF garante que o browser registre o estado opacity:0 antes de virar 1
+  requestAnimationFrame(() => img.classList.add('img-reveal'));
+};
+
+const prepareImageLoadingTracking = () => {
+  document.querySelectorAll('.stage .artwork img').forEach((img) => {
+    // se já carregou (cache), marca
+    if (isImgLoaded(img)) {
+      markImgAsLoaded(img);
+      return;
+    }
+
+    // marca quando carregar
+    img.addEventListener('load', () => markImgAsLoaded(img), { once: true });
+
+    // em erro, não deixe invisível pra sempre
+    img.addEventListener('error', () => markImgAsLoaded(img), { once: true });
+  });
+};
+
+const revealStageImages = (stageEl) => {
+  const imgs = stageEl.querySelectorAll('.artwork img');
+
+  imgs.forEach((img) => {
+    // já tinha sido revelada? não faz nada
+    if (img.classList.contains('img-reveal')) return;
+
+    // se já carregou (ou já foi marcado), revela agora com fade
+    if (img.dataset.loaded === '1' || isImgLoaded(img)) {
+      revealImgWithFade(img);
+      return;
+    }
+
+    // se ainda não carregou, espera carregar e revela
+    img.addEventListener('load', () => revealImgWithFade(img), { once: true });
+    img.addEventListener('error', () => revealImgWithFade(img), { once: true });
+  });
+};
