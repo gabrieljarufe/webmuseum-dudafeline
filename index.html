@@ -47,30 +47,33 @@
     /* ---------- SCROLLBAR (após entrar na exposição) ---------- */
     html.enable-scroll {
       overflow-y: scroll;
+      scrollbar-width: thin;                    /* Firefox: largura fina */
+      scrollbar-color: var(--gold) transparent;
+      background-color: var(--bg);
     }
 
-    /* ===== Scrollbar WebKit ===== */
+    /* ===== Scrollbar WebKit =====
     *::-webkit-scrollbar {
-      width: 6px;
-      height: 12px;
+      width: 6px!important;
+      height: 12px!important;
     }
 
     *::-webkit-scrollbar-track {
-      background: var(--bg);
+      background: var(--bg)!important;
     }
 
     *::-webkit-scrollbar-thumb {
-      background-color: var(--gold);
-      border-radius: 0;
+      background-color: var(--gold)!important;
+      border-radius: 0!important;
     }
 
     *::-webkit-scrollbar-thumb:hover {
-      background: #f0d67a;
+      background: #f0d67a!important;
     }
 
     *::-webkit-scrollbar-corner {
-      background: var(--bg);
-    }
+      background: var(--bg)!important;
+    } */
 
     /* ---------- INTRO ---------- */
     .intro {
