@@ -145,15 +145,22 @@ html.enable-scroll::-webkit-scrollbar-thumb {
     visibility: hidden;
     pointer-events: none;
 
+    
+}
+
+#stage1 {
     transform: translateY(24px);
     transition: opacity .9s ease, transform .9s ease, visibility .9s ease;
+}
+
+#stage1.show {
+    transform: translateY(0);
 }
 
 .stage.show {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: translateY(0);
 }
 
 .stage.hidden {
@@ -201,7 +208,8 @@ html.enable-scroll::-webkit-scrollbar-thumb {
     margin-top: 22px;
     opacity: 0;
     transform: translateY(6px);
-    transition: opacity .6s ease, transform .6s ease;
+    transition: opacity .9s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                transform .9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .caption.show {
