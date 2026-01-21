@@ -237,10 +237,12 @@ html.enable-scroll {
 
     cursor: pointer;
     user-select: none;
+    pointer-events: none;
 }
 
 .scroll-indicator.show {
     opacity: 1;
+    pointer-events: auto;
 }
 
 .scroll-indicator svg {
