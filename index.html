@@ -11,9 +11,343 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <!-- <link rel="stylesheet" href="styles.css"> -->
   <style>
-    /* colocar css aqui quando finalizar projeto */
+    :root {
+      --bg: #0b0b0d;
+      --bg-2: #050506;
+      --gold: #c7a65d;
+      --gold-soft: rgba(199, 166, 93, .7);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100%;
+      background: none;
+      font-family: "Bodoni Moda", serif;
+      color: var(--gold);
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(1200px 600px at 50% 40%, rgba(199, 166, 93, .08), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ---------- SCROLLBAR (após entrar na exposição) ---------- */
+    html.enable-scroll {
+      overflow-y: scroll;
+    }
+
+    /* ===== Scrollbar WebKit ===== */
+    *::-webkit-scrollbar {
+      width: 6px;
+      height: 12px;
+    }
+
+    *::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    *::-webkit-scrollbar-thumb {
+      background-color: var(--gold);
+      border-radius: 0;
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+      background: #f0d67a;
+    }
+
+    *::-webkit-scrollbar-corner {
+      background: var(--bg);
+    }
+
+    /* ---------- INTRO ---------- */
+    .intro {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      z-index: 10;
+
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      animation: fadeIn .8s ease forwards;
+    }
+
+    .intro.ready {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .intro.hide {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 1s ease, transform 1.2 ease;
+      pointer-events: none;
+    }
+
+    .intro h1 {
+      margin: 0;
+      font-weight: 500;
+      letter-spacing: .12em;
+      font-size: clamp(44px, 6vw, 78px);
+    }
+
+    .intro p {
+      margin-top: 16px;
+      font-size: 14px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+    }
+
+    .start-btn {
+      margin-top: 56px;
+      padding: 14px 36px;
+      background: none;
+      border: 1px solid rgba(199, 166, 93, .6);
+      color: var(--gold);
+      font-family: inherit;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      opacity: 0;
+      transition: opacity 1.5s ease, background 1.5s ease;
+    }
+
+    .start-btn.show {
+      opacity: 1;
+    }
+
+    .start-btn:hover {
+      background: rgba(199, 166, 93, .08);
+    }
+
+    /* ---------- STAGES (SALAS) ---------- */
+    .stage {
+      height: 100vh;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      transition: opacity .9s ease-out, visibility .9s ease-out;
+    }
+
+    #stage1 {
+      transform: translateY(24px);
+      transition: opacity .9s ease, transform .9s ease, visibility .9s ease;
+    }
+
+    #stage1.show {
+      transform: translateY(0);
+    }
+
+    .stage.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .stage.hidden {
+      display: none;
+    }
+
+    .artwork img {
+      max-width: 68vw;
+      max-height: 70vh;
+      display: block;
+      margin: 0 auto;
+      filter:
+        drop-shadow(0 0 12px rgba(199, 166, 93, .16)) drop-shadow(0 0 30px rgba(199, 166, 93, .10));
+    }
+
+    .artwork img[src*="ovos-frame.png"] {
+      max-width: 58vw;
+      max-height: 60vh;
+      display: block;
+      margin: 0 auto;
+      filter:
+        drop-shadow(0 0 12px rgba(199, 166, 93, .16)) drop-shadow(0 0 30px rgba(199, 166, 93, .10));
+    }
+
+    .artwork img[src*="borboleta-frame.png"] {
+      max-width: 72vw;
+      max-height: 74vh;
+      display: block;
+      margin: 0 auto;
+      filter:
+        drop-shadow(0 0 12px rgba(199, 166, 93, .16)) drop-shadow(0 0 30px rgba(199, 166, 93, .10));
+    }
+
+    .artwork img[src*="peixes-frame.png"] {
+      max-width: 72vw;
+      max-height: 74vh;
+      display: block;
+      margin: 0 auto;
+      filter:
+        drop-shadow(0 0 12px rgba(199, 166, 93, .16)) drop-shadow(0 0 30px rgba(199, 166, 93, .10));
+    }
+
+    /* ---------- CAPTION ---------- */
+    .caption {
+      margin-top: 22px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        transform .9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .caption.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .caption .title {
+      font-size: 18px;
+      letter-spacing: .14em;
+    }
+
+    .caption .meta {
+      margin-top: 6px;
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+    }
+
+    /* ---------- ARROW (BOTÃO) ---------- */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--gold-soft);
+
+      opacity: 0;
+      transition: opacity .6s ease;
+      animation: float 2.5s ease-in-out infinite;
+
+      cursor: pointer;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .scroll-indicator.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .scroll-indicator svg {
+      display: block;
+    }
+
+    /* ---------- ORCA STYLE ---------- */
+
+    /* ---------- ORCA STYLE ---------- */
+
+    .orca-wrapper {
+      position: relative;
+      /* garante que a área tenha altura pra caber a imagem absoluta */
+      min-height: 70vh;
+    }
+
+    /* as duas imagens ficam sobrepostas */
+    .orca-wrapper img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      max-width: 68vw;
+      max-height: 70vh;
+      display: block;
+      margin: 0 auto;
+
+      filter: drop-shadow(0 0 12px rgba(199, 166, 93, .16)) drop-shadow(0 0 30px rgba(199, 166, 93, .10));
+
+      transition: opacity 3.2s ease-in-out;
+    }
+
+    /* orca evoluída começa invisível (embaixo) */
+    #orca-evoluida {
+      opacity: 0;
+      z-index: 1;
+    }
+
+    /* orca normal começa visível (em cima) */
+    #orca {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    /* quando disparar o evento */
+    #stage4.orca-reveal #orca {
+      opacity: 0;
+    }
+
+    #stage4.orca-reveal #orca-evoluida {
+      opacity: 1;
+    }
+
+    /* ---------- ANIMAÇÕES ---------- */
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translate(-50%, 0);
+      }
+
+      50% {
+        transform: translate(-50%, 8px);
+      }
+
+      100% {
+        transform: translate(-50%, 0);
+      }
+    }
+
+    /* Fade-in controlado por JS (funciona mesmo com cache) */
+    .stage .artwork img {
+      opacity: 0;
+      transition: opacity 2650ms ease-in-out;
+      will-change: opacity;
+    }
+
+    /* Quando liberarmos via JS */
+    .stage .artwork img.img-reveal {
+      opacity: 1;
+    }
   </style>
 </head>
 
@@ -84,7 +418,7 @@
   </section>
 
   <!-- SALA 4 -->
-   <section class="stage" id="stage4">
+  <section class="stage" id="stage4">
     <div class="artwork">
 
       <!-- container exclusivo das imagens -->
@@ -108,7 +442,7 @@
       </svg>
     </div>
   </section>
-  
+
 
   <!-- SALA 5 -->
   <section class="stage" id="stage5">
@@ -229,7 +563,189 @@
     </div>
   </section>
 
-  <script src="script.js"></script>
+  <script>
+    const TIME_WAIT_ARROW = 5000;
+
+    const intro = document.getElementById('intro');
+    const startBtn = document.getElementById('startBtn');
+
+    const stage1 = document.getElementById('stage1');
+    const stage2 = document.getElementById('stage2');
+    const stage3 = document.getElementById('stage3');
+    const stage4 = document.getElementById('stage4');
+    const stage5 = document.getElementById('stage5');
+    const stage6 = document.getElementById('stage6');
+    const stage7 = document.getElementById('stage7');
+    const stage8 = document.getElementById('stage8');
+    const stage9 = document.getElementById('stage9');
+    const stage10 = document.getElementById('stage10');
+    const stage11 = document.getElementById('stage11');
+
+    const caption1 = document.getElementById('caption1');
+    const caption2 = document.getElementById('caption2');
+    const caption3 = document.getElementById('caption3');
+    const caption4 = document.getElementById('caption4');
+    const caption5 = document.getElementById('caption5');
+    const caption6 = document.getElementById('caption6');
+    const caption7 = document.getElementById('caption7');
+    const caption8 = document.getElementById('caption8');
+    const caption9 = document.getElementById('caption9');
+    const caption10 = document.getElementById('caption10');
+    const caption11 = document.getElementById('caption11');
+
+    const arrow1 = document.getElementById('arrow1');
+    const arrow2 = document.getElementById('arrow2');
+    const arrow3 = document.getElementById('arrow3');
+    const arrow4 = document.getElementById('arrow4');
+    const arrow5 = document.getElementById('arrow5');
+    const arrow6 = document.getElementById('arrow6');
+    const arrow7 = document.getElementById('arrow7');
+    const arrow8 = document.getElementById('arrow8');
+    const arrow9 = document.getElementById('arrow9');
+    const arrow10 = document.getElementById('arrow10');
+    const arrow11 = document.getElementById('arrow11');
+
+    const hidePaintings = () => {
+      stage2.classList.add('hidden');
+      stage3.classList.add('hidden');
+      stage4.classList.add('hidden');
+      stage5.classList.add('hidden');
+      stage6.classList.add('hidden');
+      stage7.classList.add('hidden');
+      stage8.classList.add('hidden');
+      stage9.classList.add('hidden');
+      stage10.classList.add('hidden');
+      stage11.classList.add('hidden');
+    }
+
+    hidePaintings();
+
+    window.addEventListener('DOMContentLoaded', () => {
+      prepareImageLoadingTracking();
+
+      intro.classList.add('ready');
+      setTimeout(() => startBtn.classList.add('show'), 1000);
+    });
+
+    startBtn.addEventListener('click', () => {
+      window.scrollTo(0, 0);
+      intro.classList.add('hide');
+
+      setTimeout(() => {
+        intro.style.display = 'none';
+        stage1.classList.add('show');
+        revealStageImages(stage1);
+      }, 800);
+
+      setTimeout(() => caption1.classList.add('show'), 1400);
+      setTimeout(() => arrow1.classList.add('show'), TIME_WAIT_ARROW);
+    });
+
+    const showNextPainting = (stage, caption, arrow) => {
+      stage.classList.remove('hidden');
+      stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      setTimeout(() => {
+        stage.classList.add('show');
+        revealStageImages(stage);
+      }, 450);
+
+      setTimeout(() => caption.classList.add('show'), 1050);
+      setTimeout(() => arrow.classList.add('show'), TIME_WAIT_ARROW);
+    }
+
+    arrow1.addEventListener('click', () => {
+      document.documentElement.classList.add('enable-scroll');
+      showNextPainting(stage2, caption2, arrow2);
+    });
+
+    arrow2.addEventListener('click', () => {
+      showNextPainting(stage3, caption3, arrow3);
+    });
+
+    arrow3.addEventListener('click', () => {
+      showNextPainting(stage4, caption4, arrow4);
+      setTimeout(() => {
+        stage4.classList.add('orca-reveal');
+      }, 1700);
+    });
+
+    arrow4.addEventListener('click', () => {
+      showNextPainting(stage5, caption5, arrow5);
+    });
+
+    arrow5.addEventListener('click', () => {
+      showNextPainting(stage6, caption6, arrow6);
+    });
+
+    arrow6.addEventListener('click', () => {
+      showNextPainting(stage7, caption7, arrow7);
+    });
+
+    arrow7.addEventListener('click', () => {
+      showNextPainting(stage8, caption8, arrow8);
+    });
+
+    arrow8.addEventListener('click', () => {
+      showNextPainting(stage9, caption9, arrow9);
+    });
+
+    arrow9.addEventListener('click', () => {
+      showNextPainting(stage10, caption10, arrow10);
+    });
+
+    arrow10.addEventListener('click', () => {
+      showNextPainting(stage11, caption11, arrow11);
+    });
+
+    const markImgAsLoaded = (img) => {
+      img.dataset.loaded = '1';
+    };
+
+    const isImgLoaded = (img) => img.complete && img.naturalWidth > 0;
+
+    const revealImgWithFade = (img) => {
+      // rAF garante que o browser registre o estado opacity:0 antes de virar 1
+      requestAnimationFrame(() => img.classList.add('img-reveal'));
+    };
+
+    const prepareImageLoadingTracking = () => {
+      document.querySelectorAll('.stage .artwork img').forEach((img) => {
+        // se já carregou (cache), marca
+        if (isImgLoaded(img)) {
+          markImgAsLoaded(img);
+          return;
+        }
+
+        // marca quando carregar
+        img.addEventListener('load', () => markImgAsLoaded(img), { once: true });
+
+        // em erro, não deixe invisível pra sempre
+        img.addEventListener('error', () => markImgAsLoaded(img), { once: true });
+      });
+    };
+
+    const revealStageImages = (stageEl) => {
+      const imgs = stageEl.querySelectorAll('.artwork img');
+
+      imgs.forEach((img) => {
+        // já tinha sido revelada? não faz nada
+        if (img.classList.contains('img-reveal')) return;
+
+        // se já carregou (ou já foi marcado), revela agora com fade
+        if (img.dataset.loaded === '1' || isImgLoaded(img)) {
+          revealImgWithFade(img);
+          return;
+        }
+
+        // se ainda não carregou, espera carregar e revela
+        img.addEventListener('load', () => revealImgWithFade(img), { once: true });
+        img.addEventListener('error', () => revealImgWithFade(img), { once: true });
+      });
+    };
+
+
+  </script>
 
 </body>
 
